@@ -1,3 +1,5 @@
+package com.example.task01;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
@@ -12,8 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class Tests {
+class HelloWorldTest {
 
+    private static final String PACKAGE_NAME = "com.example.task01";
     private static final String CLASS_NAME = "HelloWorld";
     private static final String EXPECTED_OUTPUT = "Hello, World!";
     private static final String MAIN_SIGNATURE = "public static void main(String[] args)";
@@ -44,7 +47,7 @@ class Tests {
 
     private static Class<?> findHelloWorldClass() {
         try {
-            return Class.forName(CLASS_NAME);
+            return Class.forName(PACKAGE_NAME + "." + CLASS_NAME);
         } catch (final ClassNotFoundException e) {
             throw new AssertionError("Класс " + CLASS_NAME + " не найден", e);
         }
@@ -52,7 +55,7 @@ class Tests {
 
     private static Optional<Method> findMainMethod(final Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredMethods())
-            .filter(Tests::isMainMethod)
+            .filter(HelloWorldTest::isMainMethod)
             .findFirst();
     }
 
